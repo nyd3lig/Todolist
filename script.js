@@ -1,15 +1,16 @@
 const formAdd = document.querySelector(".add")
 const listGroup = document.querySelector(".list-group")
 const search = document.querySelector(".search input")
-
-
-
+const empty = document.querySelector("#empty")
 
 //delete items
 listGroup.addEventListener("click", (e) => {
+    
     if(e.target.classList.contains("delete")){
         e.target.parentNode.remove()
     }
+    console.log(listGroup.children.length)
+    hideShowEmpty()
 })
 //generates new todos
 const generateTemplate = (input) => {
@@ -22,12 +23,23 @@ const generateTemplate = (input) => {
     listGroup.innerHTML += html;
 };
 
+const hideShowEmpty = () => {
+    if(listGroup.children.length > 1){
+        listGroup.children[0].style.display = "none";
+    } else {
+        listGroup.children[0].style.display = "block";
+    }
+}
+
 formAdd.addEventListener("submit", (e) => {
     e.preventDefault()
+    
     let input = formAdd.add.value.trim()
     if(input.length){
     generateTemplate(input)
+    hideShowEmpty()
     }
+    
     formAdd.reset()
 });
 
